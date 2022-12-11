@@ -1,0 +1,50 @@
+{% load static %}
+
+
+
+<!-- Nav Bar -->
+    <nav id = "nav" class="navbar sticky-top navbar-expand-xxl p-5" style="background-color: rgba(66,66,66,0.76);">
+        <div class="container-fluid">
+            <a class="navbar-brand shadow-lg rounded p-2" href="{% url 'home' %}"> <img src = "{% static 'images/RMP.png' %}" width="350px" style="border-radius: 8px ">  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 mx-3">
+
+              <li class="nav-item mx-3">
+                <a class="nav-link active text-light shadow-lg rounded" aria-current="page" href="{% url 'allProfessors' %}">Find a Professor</a>
+              </li>
+
+              <li class="nav-item mx-3">
+                <a class="nav-link active text-light shadow-lg rounded" aria-current="page" href="{% url 'departments' %}">Search Departments</a>
+              </li>
+
+              <li class="nav-item mx-3">
+                <a class="nav-link active text-light shadow-lg rounded" aria-current="page" href="{% url 'aboutUs' %}">About Us</a>
+              </li>
+
+              <li class="nav-item mx-3">
+                <a class="nav-link active text-light shadow-lg rounded" aria-current="page" href="#">Profile</a>
+              </li>
+
+
+
+            </ul>
+
+
+              <a href="{% url 'register' %}"><button type="button" class="btn btn-secondary text-light buttonpadding"> Sign up </button></a>
+              <a href="{% url 'login' %}"><button type="button" class="btn btn-secondary text-light buttonpadding" >Sign in </button></a>
+
+
+
+
+          </div>
+        </div>
+      </nav>
+      <!-- End Nav Bar -->
+
+
+
+
+  

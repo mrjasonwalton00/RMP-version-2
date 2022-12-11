@@ -1,0 +1,32 @@
+{% extends '\Users\Jason Walton\Desktop\final\Rate-My-Professor\templates\main.html' %}
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class = "text-center"> Login </h1>
+        </div>
+    </div>
+    </div>
+
+
+<form action="{% url 'login' %}" method="POST">
+    {% csrf_token %}
+    <!-- Email input -->
+    <div class="container">
+        <div class="row">
+            <div class="col p-5">
+                <h5 class="text-center" style="color: white"> {{ form.as_div }} </h5>
+            </div>
+        </div>
+
+
+    </div>
+
+  
+
+
+  
+
+
+{% endblock content %}

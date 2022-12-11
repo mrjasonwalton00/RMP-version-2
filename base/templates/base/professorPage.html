@@ -1,0 +1,185 @@
+{% extends '\Users\Jason Walton\Desktop\final\Rate-My-Professor\templates\main.html' %}
+{% block content %}
+
+    <div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <div class="lead text-center mt-3 bg-secondary shadow-lg rounded p-5" style="margin-left: 200px; margin-right: 200px;">
+        <h1 class="text-light">
+            {{ professor.name }}
+            <h5 class="text-light my-5 shadow-lg rounded p-2 bg-dark">Department: {{ professor.department }}</h5>
+
+        </h1>
+        <img class="rounded shadow-lg" src="{{ professor.picture }}" alt="Picture of Professor">
+        <br>
+        <div class="text-center text-light">{{ professor.rating }}</div>
+           <div style="color:#fbec5d; display: inline">
+            {% if professor.rating < 2 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 3 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 4 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating < 5 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star" style="color:black"></i>
+            {% elif professor.rating == 5 %}
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+            {% endif %}
+        </div>
+
+    </div>
+
+        </div>
+    </div>
+    </div>
+
+
+
+<div class="container-fluid bg-secondary my-5" style="margin-top: 50px; height: 1000px">
+<div class="row">
+    <div class="col">
+        <h2 class="text-center text-light my-5"><strong>Reviews:</strong></h2>
+    </div>
+</div>
+</div>
+
+
+    {% if user.is_authenticated %}
+
+
+        <div style="margin-left: 80%; display: inline-block" class="mb-2"><a
+                href="{% url 'addreview' professor.id user.id %}"
+                class="btn btn-outline-primary"
+                type="button" id="off">Write a review</a>
+        </div>
+
+
+    {% endif %}
+
+
+
+
+
+    {% for review in reviews %}
+
+
+            <div class="row shadow rounded mb-3 pt-3 mx-1" style="">
+
+                <div class="col-sm-8 col-12">
+
+                    <h4>{{ review.heading }}</h4>
+
+
+                </div>
+
+
+                <div style="color:#fbec5d; display: inline">
+                    {% if review.rating == 1 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif review.rating == 2 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif review.rating == 3 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif review.rating == 4 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star" style="color:black"></i>
+                    {% elif review.rating == 5 %}
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    {% endif %}
+                </div>
+
+                <p>User: {{ review.user.username }}</p>
+                <p>Course taken: {{ review.courses }}</p>
+                <p>{{ review.review }}</p>
+                <br>
+                <p>Posted at: {{ review.time }}</p>
+                {% if review.update_time|date:"U" > review.time|date:"U" %}
+                    <p>Edited at: {{ review.update_time }}</p>
+                {% endif %}
+                <br>
+                {% if review.user.id == user.id %}
+                    <script>
+                        let i = document.getElementById('off');
+                        i.style.display = 'none';
+                        let bool = true;
+                    </script>
+                    <div class="text-end mb-3" style="">
+
+                        <a class="btn btn-outline-primary" href="{% url 'update' review.id professor.id %}"
+                           type="button"><i
+                                class="fa-regular fa-pen-to-square"></i></a>
+
+
+                        <form action="{% url 'delete' review.id %}" method="POST" style="display:inline-block">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger" style="display:inline-block" type="submit"><i
+                                    class="fa-solid fa-x"></i></button>
+                        </form>
+                    </div>
+                {% else %}
+                    <script>
+                        if (bool) {
+
+                        } else {
+                            let i = document.getElementById('off');
+                            i.style.display = 'block';
+                        }
+                    </script>
+                {% endif %}
+
+
+            </div>
+            </div>
+
+
+
+        {% empty %}
+            <h4>No reviews have been posted for {{ professor.name }} yet.</h4>
+
+
+    {% endfor %}
+
+
+
+
+{% endblock content %}
+
